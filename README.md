@@ -237,12 +237,12 @@ Make sure you are using the [latest version of S3TurboTool](https://github.com/K
 2. В блоке ***FIVR Control*** отмечаем ***CPU Core***
 3. В блоке ***CPU Core Voltage*** отмечаем ***Unlock Adjustable Voltage***, понижаем ***Offset Voltage***, начинаем с ***-100mV*** и нажимаем ***Apply***. Если система зависла или мы увидели синий экран, значит такое смещение нам точно не подходит, перезагружаем систему и пробуем -95mV, -90mV и т.д.
 4. Если всё вроде бы стабильно, значит запускаем ***OCCT***, выставляем режим теста:
-    - Вкладка: CPU
-    - Набор данных: Большой
-    - Режим: Тяжёлый
-    - Нагрузка: Переменная
-    - Инструкции: SSE (не AVX)
-    - Потоки: Авто
+    - CPU+RAM
+    - Data Set: Large
+    - Mode: Extreme
+    - Load Type: Variable
+    - Instruction Set: SSE
+    - Thread Settings: Auto
 
 5. Запускаем тест. Если система зависла или мы увидели синий экран (обычно ошибка CLOCK_WATCHDOG_TIMEOUT), то уменьшаем смещение и продолжаем тестировать до появления стабильности (***1 час***). Это и будет нашим значением для ядер.
 
@@ -287,7 +287,14 @@ Before proceeding, save important data on your system, be prepared for possible 
 1. After launching [ThrottleStop](https://www.techpowerup.com/download/techpowerup-throttlestop/), press FIVR
 2. In the "FIVR Control" block, "CPU Core" is marked, which means we change the offset on the cores
 3. In the "CPU Core Voltage" block, select "Unlock Adjustable Voltage", lower the "Offset Voltage", for example, to -100mV and click Apply. If the system freezes or we see a blue screen, then such an offset is definitely not suitable for us, we reboot the system and try -95mV, etc.
-4. If everything seems to be stable, then we launch the [OCCT](https://www.ocbase.com/), set the test mode "CPU/Data set Large/Mode Extreme/Load type Variable/Instruction set SSE/Threads Auto". Why SSE and not AVX? Because under AVX load, the processor switches to another operating mode, adds voltage and decreases frequency. This will not work when testing the stability of the cores. Before running the test, we take care of proper cooling of the processor, VRM area and RAM (it can throttle without additional cooling).
+4. If everything seems to be stable, then we launch the [OCCT](https://www.ocbase.com/download), set the test mode:
+    - CPU+RAM
+    - Data Set: Large
+    - Mode: Extreme
+    - Load Type: Variable
+    - Instruction Set: SSE
+    - Thread Settings: Auto
+
 5. We run the test. If the system freezes or we see a blue screen (usually the CLOCK_WATCHDOG_TIMEOUT error), then we reduce our offset and continue testing until stability appears (1 hour). This will be our core value.
 
 Next, we move on to the cache test (you can start with -125mV). Optimally test the cache in LinX (tested on [v0.6.5](https://github.com/sanekgusev/LinX-old/releases/latest)), set the 8192MB memory setting, press Start. In case of instability, a blue screen is possible (usually a WHEA_UNCORRECTABLE_ERROR error). 5 minutes of the test is enough.
